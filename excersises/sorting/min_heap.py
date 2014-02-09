@@ -1,17 +1,31 @@
 from math import * 
 
 class MinHeap(object):
-    arr = []
 
     def __init__(self):
+        self.arr = []
         print('initialized')
     
-    def add(self, el):
-        self.arr.append(el)
+    def insert(self, el):
+        self.arr.append(el + 1)
+        self.decrease_key(len(self.arr) -1, el)
+        
+    def minimum(self):
+        return self.arr[0]
 
-    def addAll(self, listEl):
+    def decrease_key(self, index, new_val):
+        if new_val > self.arr[index] :
+            raise Exception('new_val should be less than element in index')
+        self.arr[index] = new_val
+        while index > 0 and self.arr[self.__parent(index)] > self.arr[index] :
+            parent_old_val = self.arr[self.__parent(index)]
+            self.arr[self.__parent(index)] = self.arr[index]
+            self.arr[index] = parent_old_val
+            index = self.__parent(index)
+    
+    def insert_all(self, listEl):
         for el in listEl :
-            self.arr.append(el)
+            self.insert(el)
 
     def genIndent(self, i, lastPower):
         indentSize = 2 * (lastPower - i - 1) - 1
@@ -44,13 +58,12 @@ class MinHeap(object):
     def __right(self, i):
         return 2 * i + 1
    
-    
+'''    
 mh = MinHeap()
-mh.addAll([1,2,3,4,5,6,7,0,9,2,6,7,5,4])
+mh.insert_all([1,2,3,4,5,6,7,0,9,2,6,7,5,4])
 
 mh.printHeap()
  
-'''
 1,2,3,4,5,6,7,8,9,10
     1
   2    3

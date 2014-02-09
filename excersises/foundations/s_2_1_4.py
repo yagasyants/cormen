@@ -1,5 +1,5 @@
 
-def add(a, b):
+def insert(a, b):
     m = 0
     c = []
     for i in reversed(range(len(a))) :
@@ -21,6 +21,6 @@ def add(a, b):
 a1 = [1, 1, 1, 1]
 b1 = [1, 0, 0, 1]
 
-c1 = add(a1, b1)
+c1 = insert(a1, b1)
 
 print(c1)
