@@ -27,7 +27,7 @@ class Test(unittest.TestCase):
     def test_print(self):
         self.mh.insert_all([1,2,3,4,5,6,7,0,9,20,8,77,55,44])
                 
-        self.mh.printHeap()        
+        self.mh.print_heap()        
              
     def setUp(self):
         self.mh = min_heap.MinHeap()
