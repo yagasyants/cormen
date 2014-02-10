@@ -5,22 +5,57 @@ class MinHeap(object):
     def __init__(self):
         self.arr = []
     
+    def size(self):
+        return len(self.arr)
+    
+    def _get_min_index(self, i):             
+        left = self._left(i)
+        right = self._right(i)
+        
+        if left < len(self.arr) and self.arr[left] < self.arr[i] and self.arr[left] <= self.arr[right]:
+            return left
+        elif right < len(self.arr) and self.arr[right] < self.arr[i] and self.arr[right] <= self.arr[left]:
+            return right
+        else:
+            return i
+
+    def _min_heapify(self, i):
+        min_index = self._get_min_index(i)
+        if min_index != i:
+            old_i= self.arr[i]
+            self.arr[i] = self.arr[min_index]
+            self.arr[min_index] = old_i
+            self._min_heapify(min_index)
+        
     def insert(self, el):
-        self.arr.append(el + 1)
-        self.decrease_key(len(self.arr) -1, el)
+        self.arr.append(el)
+        self._insert_at_index(len(self.arr) -1, el)
         
     def minimum(self):
         return self.arr[0]
 
-    def decrease_key(self, index, new_val):
-        if new_val > self.arr[index] :
-            raise Exception('new_val should be less than element in index')
+    def extract_min(self):
+        min_to_ret = self.arr[0]
+        last_el = self.arr[len(self.arr) -1]
+        self.arr[0] = last_el
+        del(self.arr[len(self.arr) -1])
+        self._min_heapify(0)
+        return min_to_ret
+
+    
+
+    def _insert_at_index(self, index, new_val):
         self.arr[index] = new_val
-        while index > 0 and self.arr[self._parent(index)] > self.arr[index] :
+        while index > 0 and self.arr[self._parent(index)] > self.arr[index]:
             parent_old_val = self.arr[self._parent(index)]
             self.arr[self._parent(index)] = self.arr[index]
             self.arr[index] = parent_old_val
             index = self._parent(index)
+
+    def decrease_key(self, index, new_val):
+        if new_val > self.arr[index] :
+            raise Exception('new_val should be less than element in index')
+        self._insert_at_index(index, new_val)
     
     def insert_all(self, list_el):
         for el in list_el :
@@ -52,13 +87,24 @@ class MinHeap(object):
             print(indent + line)
 
     def _parent(self,i):
-        return i // 2
+        return (i-1) // 2
     
     def _left(self, i):
-        return 2 * i
+        return 2 * i + 1
     
     def _right(self, i):
-        return 2 * i + 1
+        return 2 * i + 2
+
+class PairHolder(object):
+    def __init__(self, val, holded_val):
+        self.val = val
+        self.holded_val = holded_val
+
+    def __lt__(self, other):
+        return self.val < other.val
+
+    def __eq__(self, other):
+        return self.val == other.val
    
 '''    
 mh = MinHeap()
