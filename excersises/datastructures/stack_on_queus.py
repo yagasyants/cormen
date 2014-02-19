@@ -1,5 +1,10 @@
 from collections import deque
 
+'''
+10.1-6
+Show how to implement a queue using two stacks. Analyze the running time of the queue operations.
+'''
+
 class Stack(object):
     
     def __init__(self):
